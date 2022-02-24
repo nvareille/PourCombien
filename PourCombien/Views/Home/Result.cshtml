@@ -1,0 +1,15 @@
+﻿@model PourCombien.Database.Defi
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+@if (Model.Choix1 == Model.Choix2)
+{
+    <h1>CHEH</h1>
+    <p>Tu dois: @Model.Question</p>
+}
+else
+{
+    <p>Pas de @Model.Question</p>
+}

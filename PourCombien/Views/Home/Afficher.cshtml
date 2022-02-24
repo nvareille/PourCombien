@@ -1,0 +1,26 @@
+﻿@model PourCombien.Database.Defi
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h1>@Model.Question</h1>
+
+@if (@Model.Max > 0)
+{
+    <form method="post" asp-action="SetChoix" asp-route-id="@Model.Id">
+        <p>[0, @Model.Max]</p>
+        <p>Ton chiffre ?</p>
+        <input type="number" name="choix"/>
+        <input type="submit" value="Valider"/>
+    </form>
+}
+else
+{
+    <form method="post" asp-action="SetMax" asp-route-id="@Model.Id">
+        <p>Pour combien ?</p>
+        <input type="number" name="number"/>
+        <input type="submit" value="Valider"/>
+    </form>
+}
