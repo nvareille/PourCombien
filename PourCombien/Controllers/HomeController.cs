@@ -29,39 +29,39 @@ namespace PourCombien.Controllers
         [HttpPost]
         public IActionResult Proposition(string proposition)
         {
-            Defi defi = new Defi
+            var defi = new Defi
             {
                 Question = proposition
             };
             Context.Defis.Add(defi);
             Context.SaveChanges();
-            return (RedirectToAction("Afficher", new
+            return RedirectToAction("Afficher", new
             {
                 id = defi.Id
-            }));
+            });
         }
 
         [HttpGet("{id}/")]
         public IActionResult Afficher(Guid id)
         {
-            Defi defi = Context.Defis.FirstOrDefault(i => i.Id == id);
+            var defi = Context.Defis.FirstOrDefault(i => i.Id == id);
 
-            return (View(defi));
+            return View(defi);
         }
 
         [HttpPost("{id}/")]
         public IActionResult SetMax(Guid id, int number)
         {
-            Defi defi = Context.Defis.FirstOrDefault(i => i.Id == id);
+            var defi = Context.Defis.FirstOrDefault(i => i.Id == id);
 
             defi.Max = number;
             Context.Defis.Update(defi);
             Context.SaveChanges();
 
-            return (RedirectToAction("Afficher", new
+            return RedirectToAction("Afficher", new
             {
                 id
-            }));
+            });
         }
 
         public IActionResult Privacy()
@@ -78,37 +78,35 @@ namespace PourCombien.Controllers
         [HttpPost("{id}/choix")]
         public IActionResult SetChoix(Guid id, int choix)
         {
-            Defi defi = Context.Defis.FirstOrDefault(i => i.Id == id);
+            var defi = Context.Defis.FirstOrDefault(i => i.Id == id);
 
             if (defi.Choix1 == 0)
             {
                 defi.Choix1 = choix;
                 Context.Defis.Update(defi);
                 Context.SaveChanges();
-            }
-            else
-            {
-                defi.Choix2 = choix;
-                Context.Defis.Update(defi);
-                Context.SaveChanges();
-
-                return (RedirectToAction("Result", new
+            
+                return RedirectToAction("Afficher", new
                 {
                     id
-                }));
+                });
             }
+            
+            defi.Choix2 = choix;
+            Context.Defis.Update(defi);
+            Context.SaveChanges();
 
-            return (RedirectToAction("Afficher", new
+            return RedirectToAction("Result", new
             {
                 id
-            }));
+            });
         }
 
         [HttpGet("{id}/result")]
         public IActionResult Result(Guid id)
         {
-            Defi defi = Context.Defis.FirstOrDefault(i => i.Id == id);
-            return (View(defi));
+            var defi = Context.Defis.FirstOrDefault(i => i.Id == id);
+            return View(defi);
         }
     }
 }
